@@ -176,7 +176,7 @@ function mergePiece(){
     //funde a peça atual com a grade 
     for (let r = 0; r < currentPiece.size; r++){
         for (let c = 0; c <currentPiece.size; c++){
-            if (currentPiece.shepe[r][c]){
+            if (currentPiece.shape[r][c]) {
                 const gridRow = currentPiece.row + r;
                 const gridCol = currentPiece.col + c;
 
@@ -204,7 +204,7 @@ function mergePiece(){
 }
 
 // ==== funçoes de jogo ====
-function movePieceDow(){
+function movePieceDown(){
     if (isPaused || isGameOver) return;
 
     if (isValidMove(currentPiece, 1, 0)){
@@ -241,13 +241,13 @@ function rotatePiece() {
     // transpõe a matriz (gira 90 graus)
     for (let r = 0; r < rotated.size; r++){
         for(let c = 0; c < r; c++){
-            [rotated.shepe[r][c], rotated.shepe[c][r]] =
-            [rotated.shepe[c][r], rotated.shepe[r][c]];
+            [rotated.shape[r][c], rotated.shape[c][r]] = [rotated.shape[c][r], rotated.shape[r][c]];
         }
     }
+
     // inverte as colunas para rotação horaria 
     for (let r = 0; r < rotated.size; r++){
-        rotated.shepe[r].reverse();
+        rotated.shape[r].reverse();
     }
     //testa se a rotação e valida
     if (isValidMove(rotated)){
@@ -262,7 +262,7 @@ function checkLines(){
     // verifica cada linha de baixo para cima 
     for(let r = ROWS - 1; r >= 0; r--){
         if(isLineComplete(r)){
-            removerLine(r);
+            removeLine(r);
             linesCleared++;
             r++; // re-verifica a mesma posição após remoção
         }
@@ -273,6 +273,7 @@ function checkLines(){
         const points = [100, 300, 500, 800]; // 1, 2, 3, 4, 5 linhas
         score += linesCleared <= 4 ? points[linesCleared - 1]:800;
         updateScore();
+
         // aumenta velocidade a cada 1000 pontos 
         if (score % 1000 < 100 && gameSpeed > 100) {
             gameSpeed -=50;
@@ -292,7 +293,7 @@ function isLineComplete(row){
 }
 function removeLine(row){
     // remove uma linha e move todos acima para baixo 
-    for (let r = row; r < 0; r--){
+    for (let r = row; r > 0; r--){
         for(let c = 0; c < COLS; c++){
             grid[r][c] = grid[r-1][c];
         }
@@ -319,8 +320,8 @@ function updateNextPiecePreview(){
         previewContainer = document.createElement('div');
             previewContainer.className = 'next-piece-preview';
             previewContainer.style.cssText = `
-            margin-top: 20px
-            padding: 10px
+            margin-top: 20px;
+            padding: 10px;
             background: rgba(255,255,255,0.1);
             boder-radius: 5px;
             text-align: center;
@@ -393,13 +394,13 @@ function setupControls(){
             case 'ArrowDown':
                 //acelera a queda
                 clearInterval(gameloop);
-                movePieceDow();
-                gameloop = setInterval(movePieceDow, 50);
+                movePieceDown();
+                gameloop = setInterval(movePieceDown, 50);
                 break;
                 case 'ArrowUp':
                     rotatePiece();
                     break;
-                    case '':
+                    case ' ':
                         // pausa com espaço
                         togglePause();
                         break;
@@ -416,13 +417,13 @@ function setupControls(){
 
 function startGameLoop(){
     //inicia o loop principal do jogo 
-    gameloop = setInterval(movePieceRight, gameSpeed);
+    gameloop = setInterval(movePieceDown, gameSpeed);
 }
 
 function restartGameLoop(){
     // reinicia o loop com velocidade atual 
     clearInterval(gameloop);
-    gameloop = setInterval(movePieceDow, gameSpeed);
+    gameloop = setInterval(movePieceDown, gameSpeed);
 }
 
 function togglePause(){
@@ -463,7 +464,7 @@ window.addEventListener('load',init);
 //adiciona css para a pré-visualização
 const style = document.createElement('style');
 style.textContent = `
-    .    .next-piece-preview h3 {
+        .next-piece-preview h3 {
         color: white;
         margin-bottom: 10px;
         font-size: 16px;
