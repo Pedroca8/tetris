@@ -3,7 +3,7 @@ let canvas, ctx;
 let grid = [];
 const COLS = 30; // 300px / 10px
 const ROWS = 50; // 500px / 10px
-const BLOCK_SIZE = 10; // tamanho de cada block de 10px
+const BLOCK_SIZE = 20; // tamanho de cada block de 10px
 let currentPiece; // peça atual em movimento
 let nextPiece; // proxima peça 
 let score = 0; // pontuação 
@@ -45,14 +45,14 @@ const PIECES = [
         color: 'green',
         size: 3
     },
-    // L (formato de L - preto)
+    // L (formato de L - roxo)
     {
          shape: [
             [0,0,1],
             [1,1,1],
             [0,0,0]
         ],
-        color:'black',
+        color:'purple',
         size: 3
     }
 ];
