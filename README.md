@@ -62,8 +62,7 @@ Este projeto demonstra capacidade para atuar em:
 - Empresas que valorizam resolução de problemas e código limpo
 
 ---
-
-📌 **Palavras-chave SEO**  
+ 
 `javascript avançado`, `jogo em javascript`, `html5 canvas`, `frontend developer`, `lógica de programação`, `game development`, `desenvolvedor javascript`, `aplicações interativas`
 
 
